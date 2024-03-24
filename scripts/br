@@ -1,0 +1,21 @@
+#!/bin/bash
+
+while true; do
+    # Get current brightness value using brightnessctl
+    currentBrightness=$(brightnessctl | grep 'Current brightness' | awk '{print $4}' | tr -d '()')
+
+    # Display current brightness
+    echo "Current brightness: $currentBrightness"
+
+    # Ask for user's preferred brightness value
+    read -p "Enter your preferred brightness value: " newBrightness
+
+    # Check if the entered value is a number
+    if [[ $newBrightness =~ ^[0-9]+$ ]]; then
+        # Set the new brightness value
+        brightnessctl -s s "$newBrightness%"
+        break  # Exit the loop if a valid number is entered
+    else
+        echo "Invalid input. Please enter a valid numerical value."
+    fi
+done

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Firstly check if xrandr is installed
+if [ ! -f /usr/bin/xrandr ]
+then
+    echo "xrandr is not installed. Installing xrandr..."
+    sudo pacman -S xorg-xrandr
+fi
+
+# Set variable for default, gaming and current resolution
+default="1920x1080"
+gaming="1368x768"
+current="$(xrandr --current | grep "*" | awk '{print $1}')"
+
+# Changing the resoluton
+if [ $current == $default ]
+then
+    xrandr -s $gaming
+else
+    xrandr -s $default
+fi

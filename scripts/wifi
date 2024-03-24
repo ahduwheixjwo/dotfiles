@@ -1,0 +1,44 @@
+#!/bin/bash
+
+count=0 # Counter for WiFi scanning
+
+while true;do
+    while [ "$count" -lt 3 ];do # Looping 3 times for scanning WiFi
+        nmcli dev wifi rescan
+    
+        sleep 1
+        ((count++))
+    done
+
+    read -p "Do you want to rescan ? (y/n): " option
+    
+    if [ "$option" == "y" ] || [ "$option" == "Y" ];then
+        count=0
+    elif [ "$option" == "n" ] || [ "$option" == "N" ];then
+        break
+    else
+        echo "Invalid option..."
+    fi
+done
+
+nmcli dev wifi list # List all available WiFis
+echo ""
+
+while true;do
+    read -p "Enter WiFi's BSSID: " ssid # Ask for user's preferred WiFi
+
+    if nmcli dev wifi list | grep -q "$ssid";then # Check if WiFi BSSID exists
+        nmcli dev wifi con "$ssid" # If yes, connect to it     
+        if [ "$?" -eq 4 ];then # Check if it needs password
+            read -p "Enter WiFi's password: " password
+            nmcli dev wifi con "$ssid" password "$password"
+            break
+        else
+            break
+        fi
+    
+    else
+        echo "WiFi BSSID not found..."
+        echo ""
+    fi
+done

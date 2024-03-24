@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Check for internet connection
+if ping -c 3 google.com >/dev/null 2>&1; then
+    echo "Internet connection is available..."
+else
+    echo "Please connect to internet first! Aborting..."
+
+    sleep 0.5
+    exit
+fi
+
+echo "Updating pacman...."
+echo ""
+
+# Updating pacman
+if sudo pacman -Syu --noconfirm 2>$HOME/pacman.log; then
+    echo "Update completed..."
+    echo ""
+else
+    echo "There's an error [Exit Code: $?]. Check your log file..."
+fi
+
+if [[ -f /usr/bin/yay ]]; then
+    echo "Yay detected. Do you want to update yay ? (y/n)"
+    read -p ">>" option
+    
+    if [[ "$option" == "y" || "$option" == "Y" ]]; then
+        if yay -Syu --noconfirm 2>$HOME/yay.log; then
+            echo "Update completed..."
+        else
+            echo "There's an error [Exit Status: $?]. Check your log file..."
+        fi
+    elif [[ "$option" == "n" || "$option" == "N" ]]; then
+        sleep 0.5
+        exit 1
+    else
+        echo "Invalid option...."
+        echo ""
+    fi
+fi
