@@ -31,3 +31,9 @@ sudo pacman -S $xPackages $graphicsPackages $audioPackages $systemPackages $font
 yay -S $yayPackages
 
 source $PWD/configuration.sh
+
+printf '\033e'
+echo "==> All configuration has been done. Rebooting..."
+sleep 1.5
+
+reboot
