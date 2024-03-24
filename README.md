@@ -13,8 +13,9 @@
 ```
 git clone https://github.com/ahduwheixjwo/dotfiles.git
 cd dotfiles
-chmod +x run.sh
+chmod +x run.sh configuration.sh
 ./run.sh
+./configuration.sh
 ```
 > [!NOTE]
 > _scripts_ folder is my personal script that I use such as automatic update, disable touchscreen and changing resolution. Its not important for the i3wm configuration, but feel free to use it.
