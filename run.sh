@@ -30,10 +30,4 @@ sleep 1
 sudo pacman -S $xPackages $graphicsPackages $audioPackages $systemPackages $fonts
 yay -S $yayPackages
 
-source $PWD/configuration.sh
-
-printf '\033e'
-echo "==> All configuration has been done. Rebooting..."
-sleep 1.5
-
-reboot
+echo "==> Please 'startx' and run ./configuration.sh"
