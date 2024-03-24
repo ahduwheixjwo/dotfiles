@@ -16,3 +16,5 @@ cd dotfiles
 chmod +x run.sh
 ./run.sh
 ```
+> [!NOTE]
+> _scripts_ folder is my personal script that I use such as automatic update, disable touchscreen and changing resolution. Its not important for the i3wm configuration, but feel free to use it.
