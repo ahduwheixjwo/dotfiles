@@ -5,9 +5,8 @@
 - Terminal: [Kitty](https://github.com/kovidgoyal/kitty) 
 
 # Installation & Usage
-- You can either clone this repo and manually configure the file
-## OR
-- You can run my script _run.sh_ on **fresh Archlinux install**. Feel free to manually edit the code based on your own usage
+1. You can either clone this repo and manually configure the file
+2. You can run my script _run.sh_ on **fresh Archlinux install**. Feel free to manually edit the code based on your own usage
 ```
 git clone https://github.com/ahduwheixjwo/dotfiles.git
 cd dotfiles
