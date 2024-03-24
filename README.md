@@ -20,4 +20,4 @@ chmod +x run.sh
 > _scripts_ folder is my personal script that I use such as automatic update, disable touchscreen and changing resolution. Its not important for the i3wm configuration, but feel free to use it.
 
 > [!IMPORTANT]
-> Please not that my script _run.sh_ is my personal configuration for my system. I didn't use display manager. Instead, I use xinit to manually start my display server. If you want to want to use it with display manager, feel free to edit it.
+> Please not that my script _run.sh_ is my personal configuration for my system. I didn't use display manager. Instead, I use xinit to manually start my display server. If you want to use it with display manager, you can edit it by yourself.
