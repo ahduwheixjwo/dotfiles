@@ -1,0 +1,54 @@
+# Locate the location of scripts
+command=$HOME/.config/i3blocks/scripts/$BLOCK_NAME/$BLOCK_NAME
+
+# Disable separator
+separator=false
+
+[microphone]
+command=$HOME/.config/i3blocks/scripts/microphone/microphone
+interval=2
+color=#b8bb26
+
+########################
+separator_block_width=10
+[spacer]
+separator_block_width=10
+full_text=
+color=#
+########################
+
+[volume]
+command=$HOME/.config/i3blocks/scripts/volume/volume
+label=墳 : 
+interval=5
+color=#fe8019
+
+########################
+separator_block_width=10
+[spacer]
+separator_block_width=10
+full_text=
+color=#98971a
+########################
+
+[battery]
+comand=$HOME/.config/i3blocks/scripts/battery/battery
+label= : 
+interval=10
+color=#fabd2f
+
+########################
+separator_block_width=10
+[spacer]
+separator_block_width=10
+full_text=
+color=#98971a
+########################
+
+# date '+%a, %b-%d %H:%M'
+
+[date]
+command=date | awk -F' ' '{print $4,$5}'
+interval=1
+label= : 
+color=#b8bb26
