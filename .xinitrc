@@ -51,5 +51,5 @@ fi
 xrandr -s 1920x1080
 xwallpaper --zoom ~/.config/wallpaper1.jpg
 picom -b --config ~/.config/picom/picom.conf
-touchscreen
+screen
 exec i3
