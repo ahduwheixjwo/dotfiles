@@ -4,6 +4,20 @@ command=$HOME/.config/i3blocks/scripts/$BLOCK_NAME/$BLOCK_NAME
 # Disable separator
 separator=false
 
+[calendar]
+command=date '+%a, %b/%d'
+interval=once
+label= : 
+color=#fabd2f
+
+########################
+separator_block_width=10
+[spacer]
+separator_block_width=10
+full_text=
+color=#98971a
+########################
+
 [microphone]
 command=$HOME/.config/i3blocks/scripts/microphone/microphone
 interval=2
