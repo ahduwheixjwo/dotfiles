@@ -5,7 +5,7 @@ command=$HOME/.config/i3blocks/scripts/$BLOCK_NAME/$BLOCK_NAME
 separator=false
 
 [calendar]
-command=date '+%a, %b/%d'
+command=date '+%a, %b-%d'
 interval=once
 label= : 
 color=#fabd2f
