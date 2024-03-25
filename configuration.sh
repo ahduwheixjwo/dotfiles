@@ -21,6 +21,11 @@ optional() {
         fi
     done
 
+    # Move fonts
+    cd $HOME/dotfiles/fonts
+
+    sudo cp -r iosevka /usr/share/fonts/
+
     # Install essential programs ( Bitwarden & Telegram )
     mkdir $HOME/AppImage
 
