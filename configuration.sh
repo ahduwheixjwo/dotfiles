@@ -27,7 +27,7 @@ optional() {
     # Installing Bitwarden & Telegram
     printf '\033e'
     echo "==> Installing Bitwarden..."
-    sleep1
+    sleep 1
 
     aria2c -d $HOME/AppImage -o Bitwarden.AppImage "https://vault.bitwarden.com/download/?app=desktop&platform=linux"
 
