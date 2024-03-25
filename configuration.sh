@@ -47,6 +47,17 @@ optional() {
     chmod +x *.AppImage
     tar -xvf *.tar.xz
     rm *.tar.xz
+
+    # Configure GKT theme and icon packs
+    mkdir ~/.local/share/themes
+    mkdir ~/.local/share/icons
+
+    cd $HOME/dotfiles/gtk
+
+    # For gtk theme
+    bsdtar -xf Gruvbox-Dark-BL.zip -C $HOME/.local/share/themes
+    # For icon
+    bsdtar -xf gruvbox-plus-icon-pack-5.2.zip -C $HOME/.local/share/themes
 }
 
 while true; do
