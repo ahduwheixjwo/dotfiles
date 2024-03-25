@@ -3,17 +3,6 @@
 set -e
 printf '\033e'
 
-# A variable define to determine whether this script has already run or not
-run=false
-
-# Check if this script has already run
-if [[ $run==true ]];then
-    echo "You've already run this script, please run the configuration. Aborting..."
-
-    sleep 1
-    exit 1
-fi
-
 # Update mirrors. (COMMENT IF YOU DON"T WANT THIS)
 echo "==> Updating pacman mirrorlist..."
 # Check if pacman-contrib is installed...
@@ -21,13 +10,8 @@ if [[ ! -f /usr//bin/rankmirrors ]]; then
     sudo pacman -S pacman-contrib
 fi
 
-# Give root permission if user's doesn't have root permission
-if [[ $UID -ne 0 ]]; then
-    sudo su
-fi
-
-cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
+sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+sudo bash -c 'rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist' >/dev/null
 
 # Check if git is installed
 if [[ ! -f /usr/bin/git ]]; then
@@ -59,4 +43,3 @@ sudo pacman -S $xPackages $graphicsPackages $audioPackages $systemPackages $font
 yay -S $yayPackages
 
 echo "==> Please 'startx' and run ./configuration.sh"
-run=true
