@@ -3,17 +3,11 @@
 set -e
 printf '\033e'
 
-# Clone dotfiles repository
-echo "==> Cloning dotfiles repository..."
-sleep 1
-git clone https://github.com/ahduwheixjwo/dotfiles.git && cd dotfiles
-
 printf '\033e'
 echo "==> Moving all files to its location..."
 sleep 1
 cp $PWD/.xinitrc $HOME
-cp -r $PWD/.config/ $HOME/.config/
-
+cp -r $PWD/.config/* $HOME/.config/
 
 optional() {
     # Change directory to scripts
@@ -31,14 +25,23 @@ optional() {
     mkdir $HOME/AppImage
 
     # Installing Bitwarden & Telegram
+    printf '\033e'
+    echo "==> Installing Bitwarden..."
+    sleep1
+
     aria2c -d $HOME/AppImage -o Bitwarden.AppImage "https://vault.bitwarden.com/download/?app=desktop&platform=linux"
+
+    printf '\033e'
+    echo "==> Installing Telegram"
+    sleep 1
+
     aria2c -d $HOME/AppImage "https://telegram.org/dl/desktop/linux"
 
     cd $HOME/AppImage
 
     chmod +x *.AppImage
-    tar -xvf *.tar.gz
-    rm *.tar.gz
+    tar -xvf *.tar.xz
+    rm *.tar.xz
 }
 
 while true; do
@@ -50,8 +53,15 @@ default=n"
         break
     elif [[ "$option" == "y" || "$option" == "Y" ]]; then
         optional
+        break
     else
         echo "Invalid option..."
         echo ""
     fi
 done
+
+printf '\033e'
+echo "==> All configuration has been done. Rebooting..."
+sleep 2
+
+reboot
