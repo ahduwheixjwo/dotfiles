@@ -33,8 +33,8 @@ printf '\033e'
 xPackages="xorg-server xorg-xinit xorg-xrandr xorg-xinput"
 graphicsPackages="libva lib32-libva libva-intel-driver lib32-libva-intel-driver mesa lib32-mesa vulkan-intel lib32-vulkan-intel"
 audioPackages="pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-jack alsa-utils pavucontrol"
-systemPackages="firefox usbutils brightnessctl feh i3-gaps i3blocks rofi kitty xwallpaper aria2 android-tools ranger shutter zsh code libinput zip libva-utils"
-fonts="noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-jetbrains-mono-nerd"
+systemPackages="unzip lxappearance acpi thunar firefox usbutils brightnessctl feh i3-gaps i3blocks rofi kitty xwallpaper aria2 android-tools shutter zsh code libinput zip libva-utils"
+fonts="noto-fonts noto-fonts-cjk noto-fonts-emoji"
 yayPackages="picom-git"
 
 echo "==> Installing essential packages..."
