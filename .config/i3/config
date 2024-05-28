@@ -196,4 +196,4 @@ client.focused_inactive	$bg		$bg			$light-green	$purple
 client.urgent		$red		$red			$darkgray	$purple
 
 # Set custom keybind
-bindsym $mod+Shift+Return exec --no-startup-id brave
+bindsym $mod+Shift+Return exec --no-startup-id firefox
