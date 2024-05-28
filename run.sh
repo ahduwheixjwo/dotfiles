@@ -31,11 +31,11 @@ cd $HOME/.cache && git clone https://aur.archlinux.org/yay.git && cd yay && make
 printf '\033e'
 # Install essential packages
 xPackages="xorg-server xorg-xinit xorg-xrandr xorg-xinput"
-graphicsPackages="mesa lib32-mesa vulkan-intel lib32-vulkan-intel"
+graphicsPackages="libva lib32-libva libva-intel-driver lib32-libva-intel-driver mesa lib32-mesa vulkan-intel lib32-vulkan-intel"
 audioPackages="pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-jack alsa-utils pavucontrol"
-systemPackages="usbutils brightnessctl feh i3-gaps i3blocks rofi kitty xwallpaper aria2 android-tools ranger shutter zsh code libinput"
+systemPackages="firefox usbutils brightnessctl feh i3-gaps i3blocks rofi kitty xwallpaper aria2 android-tools ranger shutter zsh code libinput zip libva-utils"
 fonts="noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-jetbrains-mono-nerd"
-yayPackages="brave-bin picom-git"
+yayPackages="picom-git"
 
 echo "==> Installing essential packages..."
 sleep 1
