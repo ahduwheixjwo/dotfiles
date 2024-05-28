@@ -1,44 +1,101 @@
 #!/bin/bash
 
-count=0 # Counter for WiFi scanning
 
-while true;do
-    while [ "$count" -lt 3 ];do # Looping 3 times for scanning WiFi
-        nmcli dev wifi rescan
-    
-        sleep 1
-        ((count++))
-    done
+set -e
+printf '\033c'
 
-    read -p "Do you want to rescan ? (y/n): " option
-    
-    if [ "$option" == "y" ] || [ "$option" == "Y" ];then
-        count=0
-    elif [ "$option" == "n" ] || [ "$option" == "N" ];then
-        break
-    else
-        echo "Invalid option..."
+# Fucntion
+wifi() {
+    # Scan available networks
+    nmcli dev wifi rescan
+
+    # List all available networks
+    nmcli dev wifi list | grep -n "" | tee networkList.log
+}
+
+while true; do
+    printf '\033c'
+    echo -e "==> Please choose your network based on line number (ex: 2)\n"
+    sleep 1.5
+
+    # Call wifi's function
+    echo ">>==============================================================================================<<"
+    wifi
+    echo ">>==============================================================================================<<"
+
+    currentWifiSsid="$(cat networkList.log | grep "*" | awk '{print $3}')"
+    if [[ -n "$currentWifiSsid" ]]; then
+        echo -e "\n==> Currently connected to $currentWifiSsid"
     fi
-done
 
-nmcli dev wifi list # List all available WiFis
-echo ""
+    # Receive input from user
+    echo -e "\nSelect network (-r for rescan)"
+    read -p ">> " number
 
-while true;do
-    read -p "Enter WiFi's BSSID: " ssid # Ask for user's preferred WiFi
+    # Check if the network exists
+    if [[ $number -eq 1 ]]; then
+        printf '\033c'
+        echo "==> This line is not accepted. No BSSID found..."
 
-    if nmcli dev wifi list | grep -q "$ssid";then # Check if WiFi BSSID exists
-        nmcli dev wifi con "$ssid" # If yes, connect to it     
-        if [ "$?" -eq 4 ];then # Check if it needs password
-            read -p "Enter WiFi's password: " password
-            nmcli dev wifi con "$ssid" password "$password"
-            break
-        else
-            break
-        fi
-    
+        sleep 2
+        rm networkList.log
+    # Rescan if the user input is 'r'
+    elif [[ "$number" == "r" ]]; then
+        rm networkList.log
+    # Rescan if the user input is not on the list
+    elif [[ -z $(cat networkList.log | sed -n "${number}p" | awk '{print $2}') ]];then
+        printf '\033c'
+        echo "==> Please choose number based on the list..."
+
+        sleep 2
+        rm networkList.log
+    # Connect to network if the network that user input is exists
+    elif [[ ! -z $(cat networkList.log | sed -n "${number}p" | awk '{print $2}') ]];then
+        wifiBssid=$(cat networkList.log | sed -n "${number}p" | awk '{print $2}')
+        wifiSsid=$(cat networkList.log | sed -n "${number}p" | awk '{print $3}')
+
+        printf '\033c'
+        echo "==> Connecting to $wifiSsid ..."
+        
+        # Check if it needs password or not
+        while true; do
+            if nmcli dev wifi con "$wifiBssid" >/dev/null 2>&1;then
+                printf '\033c'
+                echo "==> Connected!"
+                sleep 1
+
+                rm networkList.log
+                break 2
+            else
+                echo "==> Looks like it needs a password. Please enter network's password.."
+                read -p ">> " password
+
+                # Connect to network with password
+                while ! nmcli dev wifi con "$wifiBssid" password "$password"; do
+                    printf '\033c'
+                    echo "==> Given password is wrong, please re-enter the password (-q for quit)"
+
+                    echo "==> Password"
+                    read -p ">> " password2
+
+                    if nmcli dev wifi con "$wifiBssid" password "$password2" >/dev/null 2>&1; then
+                        printf '\033c'
+                        echo "==> Connected!"
+                        sleep 1
+
+                        break 3
+                    elif [[ "$password2" == "q" ]]; then
+                        break 3
+                    fi
+                done
+            fi
+        done
     else
-        echo "WiFi BSSID not found..."
-        echo ""
+        printf '\033c'
+        echo "Shitt... Something's wrong !"
+        
+        sleep 2
+        rm networkList.log
+        break
     fi
 done
