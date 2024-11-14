@@ -5,7 +5,9 @@
 - App Launcher: [Rofi](https://github.com/davatorium/rofi)
 - Compositor: [Picom](https://github.com/yshui/picom)
 - Shell: zsh with [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh/)
-- Terminal: [Kitty](https://github.com/kovidgoyal/kitty) 
+- Terminal: [Kitty](https://github.com/kovidgoyal/kitty)
+- Themes: [Gruvbox GTK Theme](https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme)
+- Icons: [Gruvbox Plus Icon Pack](https://github.com/SylEleuth/gruvbox-plus-icon-pack)
 
 # Installation & Usage
 1. You can either clone this repo and manually configure the file.
@@ -24,4 +26,4 @@ chmod +x run.sh configuration.sh
 > _scripts_ folder is my personal script that I use such as automatic update, disable touchscreen and changing resolution. Its not important for the i3wm configuration, but feel free to use it.
 
 > [!IMPORTANT]
-> Please note that my script _run.sh_ is my personal configuration for my system. I didn't use display manager. Instead, I use xinit to manually start my display server. If you want to use it with display manager, you can edit it by yourself.
+> Please note that _run.sh_ is my personal configuration. I didn't use display manager. Instead, I use xinit to manually start my display server. If you want to use it with display manager, you can edit it by yourself.
