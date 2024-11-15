@@ -1,0 +1,63 @@
+#!/bin/bash
+# Detect and set the audio mixer (supports ALSA, PulseAudio, and PipeWire)
+
+# Set default mixer
+MIXER="default"
+if pgrep -x "pipewire" > /dev/null; then
+    MIXER="pipewire"
+elif lsmod | grep -q "pulse"; then
+    MIXER="pulse"
+elif lsmod | grep -q "jack"; then
+    MIXER="jackplug"
+fi
+MIXER="${2:-$MIXER}"
+
+# Set control for wpctl (PipeWire) or amixer (ALSA/PulseAudio)
+STEP="${1:-5%}"
+SCONTROL="${BLOCK_INSTANCE:-Master}"  # Default control
+
+# Functions for volume control and mute/unmute with PipeWire and others
+volume() {
+    if [ "$MIXER" = "pipewire" ]; then
+        wpctl get-volume @DEFAULT_AUDIO_SINK@
+    else
+        amixer -D $MIXER get $SCONTROL
+    fi
+}
+
+format() {
+    if [ "$MIXER" = "pipewire" ]; then
+        wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2 * 100 "%"}'
+    else
+        perl_filter='if (/.*\[(\d+%)\] (\[(-?\d+.\d+dB)\] )?\[(on|off)\]/)'
+        perl_filter+='{CORE::say $4 eq "off" ? "MUTE" : "'
+        perl_filter+=$([[ $STEP = *dB ]] && echo '$3' || echo '$1')
+        perl_filter+='"; exit}'
+        perl -ne "$perl_filter"
+    fi
+}
+
+# Button controls
+case $BLOCK_BUTTON in
+  3) # Right click: Toggle mute/unmute
+      if [ "$MIXER" = "pipewire" ]; then
+          wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+      else
+          amixer -q -D $MIXER sset $SCONTROL toggle
+      fi ;;
+  4) # Scroll up: Increase volume
+      if [ "$MIXER" = "pipewire" ]; then
+          wpctl set-volume @DEFAULT_AUDIO_SINK@ $STEP+
+      else
+          amixer -q -D $MIXER sset $SCONTROL $STEP+ unmute
+      fi ;;
+  5) # Scroll down: Decrease volume
+      if [ "$MIXER" = "pipewire" ]; then
+          wpctl set-volume @DEFAULT_AUDIO_SINK@ $STEP-
+      else
+          amixer -q -D $MIXER sset $SCONTROL $STEP- unmute
+      fi ;;
+esac
+
+# Display volume
+volume | format
