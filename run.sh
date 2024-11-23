@@ -46,7 +46,7 @@ done
 sudo systemctl enable bluetooth > /dev/null
 sudo systemctl start bluetooth
 
-cp $PWD/.xinitrc $HOME
+cp .xinitrc $HOME
 
 echo "==> Please 'startx' and run ./configuration.sh"
 sleep 2
