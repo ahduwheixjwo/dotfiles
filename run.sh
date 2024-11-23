@@ -31,7 +31,7 @@ while true; do
     echo "Choose your audio server (1- pulse, 2- pipewire)"
     read -p ">>" audio_server
 
-    if [[ -z $audio_server || "$audio_server" == "1" ]];
+    if [[ -z "$audio_server" || "$audio_server" == "1" ]];
         sudo pacman -S $xPackages $graphicsPackages $pulseaudioPackages $systemPackages $fonts
         break
     elif [ "$audio_server" == "2" ]; then
