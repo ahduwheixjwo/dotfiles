@@ -22,13 +22,26 @@ printf '\033e'
 # Install essential packages
 xPackages="xorg-server xorg-xinit xorg-xrandr xorg-xinput"
 graphicsPackages="mesa lib32-mesa intel-media-driver vulkan-intel lib32-vulkan-intel"
-audioPackages="lib32-libpulse libpulse pipewire-pulse pipewire-alsa pavucontrol bluez bluez-libs bluez-utils"
+pipewirePackages="lib32-libpulse libpulse pipewire-pulse pipewire-alsa pavucontrol bluez bluez-libs bluez-utils"
+pulseaudioPackages="lib32-libpulse libpulse pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-jack bluez bluez-libs bluez-utils"
 systemPackages="unzip lxappearance acpi thunar firefox usbutils brightnessctl feh i3-gaps i3blocks rofi kitty xwallpaper aria2 android-tools shutter zsh code libinput p7zip libva-utils picom"
 fonts="noto-fonts noto-fonts-cjk noto-fonts-emoji"
 
-echo "==> Installing essential packages..."
-sleep 1
-sudo pacman -S $xPackages $graphicsPackages $audioPackages $systemPackages $fonts
+while true; do
+    echo "Choose your audio server (1- pulse, 2- pipewire)"
+    read -p ">>" audio_server
+
+    if [[ -z $audio_server || "$audio_server" == "1" ]];
+        sudo pacman -S $xPackages $graphicsPackages $pulseaudioPackages $systemPackages $fonts
+        break
+    elif [ "$audio_server" == "2" ]; then
+        sudo pacman -S $xPackages $graphicsPackages $pipewirePackages $systemPackages $fonts
+        break
+    else
+        echo "Invalid option..."
+        echo ""
+    fi
+done
 
 sudo systemctl enable bluetooth > /dev/null
 sudo systemctl start bluetooth
